@@ -118,10 +118,11 @@ def setup(args):
     cfg = get_cfg()
     cfg.merge_from_file(args.config_file)
     cfg.merge_from_list(args.opts)
-    cfg.DATASETS.TRAIN = ("TKDatav5-train",)
-    cfg.DATASETS.TEST = ("TKDatav5-val",)
+    cfg.DATASETS.TRAIN = ("TKDatav7-train",)
+    cfg.DATASETS.TEST = ("TKDatav7-val",)
     cfg.MODEL.ROI_HEADS.NUM_CLASSES = 5  
-    cfg.SOLVER.MAX_ITER = 10000
+    cfg.SOLVER.MAX_ITER = 40000
+    cfg.TEST.DETECTIONS_PER_IMAGE  = 200
     cfg.freeze()
     #cfg.OUTPUT_DIR = '../outputs/tkmodel5'
     default_setup(cfg, args)
@@ -165,14 +166,14 @@ if __name__ == "__main__":
     
     path_data_base = '../data'
     ## Add v5 data
-    json_annotation = f'{path_data_base}/tk1957-v5.1/train/annotations.json'
-    image_path_base = f'{path_data_base}/tk1957-v5.1/train'
-    register_coco_instances(f"TKDatav5-train", {}, json_annotation, image_path_base)
+    json_annotation = f'{path_data_base}/tk1957-v7/train/annotations.json'
+    image_path_base = f'{path_data_base}/tk1957-v7/train'
+    register_coco_instances(f"TKDatav7-train", {}, json_annotation, image_path_base)
 
     ## Add v4 eval data
-    json_annotation = f'{path_data_base}/tk1957-v5.1/val/annotations.json'
-    image_path_base = f'{path_data_base}/tk1957-v5.1/val'
-    register_coco_instances(f"TKDatav5-val", {}, json_annotation, image_path_base)
+    json_annotation = f'{path_data_base}/tk1957-v7/val/annotations.json'
+    image_path_base = f'{path_data_base}/tk1957-v7/val'
+    register_coco_instances(f"TKDatav7-val", {}, json_annotation, image_path_base)
 
     launch(
         main,
